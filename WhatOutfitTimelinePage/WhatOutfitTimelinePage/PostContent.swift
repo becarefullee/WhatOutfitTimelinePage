@@ -13,7 +13,6 @@ class PostContent: UITableViewCell {
   var post: Post?
   var screenWidth: CGFloat = UIScreen.main.bounds.width
 
-  
   @IBOutlet weak var contentImage: UIImageView!
   @IBOutlet weak var likeBtn: UIButton!
   @IBOutlet weak var numberOfLikes: UILabel!
