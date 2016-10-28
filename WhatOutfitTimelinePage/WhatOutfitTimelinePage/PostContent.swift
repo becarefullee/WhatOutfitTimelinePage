@@ -31,8 +31,34 @@ class PostContent: UITableViewCell {
   
   func configure(post: Post) {
     contentImage.image = post.contentImage
-    numberOfLikes.text = "\(post.numberOfLikes)Likes"
+    numberOfLikes.text = "\(converLikesToString(numberOfLikes: post.numberOfLikes)) likes"
   }
+  
+
+  func converLikesToString(numberOfLikes: Int) -> String{
+    var number:String = String(numberOfLikes)
+    switch numberOfLikes {
+    case 0..<1000:
+      return number
+    case 1000..<1000000:
+      let index = number.index(number.endIndex, offsetBy: -3)
+      number.insert(",", at: index)
+      return number
+    case 1000000..<1000000000:
+      var index = number.index(number.endIndex, offsetBy: -3)
+      number.insert(",", at: index)
+      index = number.index(number.endIndex, offsetBy: -7)
+      number.insert(",", at: index)
+      return number
+    default:
+      return number
+
+    }
+
+    
+    
+  }
+  
   
 
 }

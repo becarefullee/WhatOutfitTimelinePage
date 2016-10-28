@@ -91,12 +91,18 @@ extension TimelinePageViewController {
   
   func setupDataSouce() {
     for i in 0...5 {
-      let date = NSDate()
+      let dateFormatter = DateFormatter()
+      let dateString1 = "27-10-2016 22:13"
+      let dateString2 = "27-10-2016 12:59"
+      dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+      let date1 = dateFormatter.date(from: dateString1)
+      let date2 = dateFormatter.date(from: dateString2)
+
       if i % 2 == 0 {
-        let post = Post(userName: "Eddie", postTime: date, numberOfLikes: 0, profileImage: "IMG", contentImage: "IMG-1")
+        let post = Post(userName: "Eddie", postTime: date1!, numberOfLikes: 10000002, profileImage: "IMG", contentImage: "IMG-1")
         dataSource.append(post)
       }else {
-        let post = Post(userName: "Jobs", postTime: date, numberOfLikes: 0, profileImage: "Jobs", contentImage: "IMG-0")
+        let post = Post(userName: "Jobs", postTime: date2!, numberOfLikes: 220, profileImage: "Jobs", contentImage: "IMG-0")
         dataSource.append(post)
       }
     }

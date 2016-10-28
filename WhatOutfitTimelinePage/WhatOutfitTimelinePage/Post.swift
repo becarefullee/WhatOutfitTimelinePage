@@ -15,12 +15,12 @@ class Post {
   
   var profileImage: UIImage
   var userName: String
-  var postTime: NSDate
+  var postTime: Date
   var contentImage: UIImage
   var numberOfLikes: Int
   var likedByCurrentUser: Bool
   
-  init(userName: String, postTime: NSDate, numberOfLikes: Int, profileImage: String, contentImage: String, likedByCurrentUser: Bool = false) {
+  init(userName: String, postTime: Date, numberOfLikes: Int, profileImage: String, contentImage: String, likedByCurrentUser: Bool = false) {
     self.userName = userName
     self.postTime = postTime
     self.numberOfLikes = numberOfLikes
