@@ -42,10 +42,18 @@ class HeaderCell: UITableViewCell {
     let calendar = Calendar.current
     let components: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
     let result = calendar.dateComponents(components, from: date, to: currentTime)
+    let year = result.year
     let month = result.month
     let day = result.day
     let hour = result.hour
     let min = result.minute
+    if year != 0 {
+      if year == 1 {
+        return "1 YEAR AGO"
+      }
+      return "\(year!) YEARS AGO"
+    }
+
     if month != 0 {
       if month == 1 {
         return "1 MONTH AGO"
