@@ -136,6 +136,7 @@ extension TimelinePageViewController {
   
   
   func handleSingleTap(_ sender: UITapGestureRecognizer) {
+    performSegue(withIdentifier: "showDetail", sender: sender)
     print("Single Tapped")
   }
   func handleDoubleTap(_ sender: UITapGestureRecognizer) {

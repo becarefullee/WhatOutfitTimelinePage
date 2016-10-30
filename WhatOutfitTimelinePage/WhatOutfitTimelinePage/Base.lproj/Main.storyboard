@@ -125,12 +125,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Home" id="Wne-9i-x3Z"/>
+                    <connections>
+                        <segue destination="8rr-wr-pTF" kind="show" identifier="showDetail" id="ZWT-gO-yK0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rs0-7f-GdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1805.5999999999999" y="1083.5082458770617"/>
         </scene>
-        <!--View Controller-->
+        <!--Outfit Detail-->
         <scene sceneID="Z2x-R2-hQJ">
             <objects>
                 <viewController id="8rr-wr-pTF" sceneMemberID="viewController">
@@ -143,10 +146,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Outfit Detail" id="MbH-pC-Eyk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMG-9A-TLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2643" y="1062"/>
+            <point key="canvasLocation" x="2641" y="1084"/>
         </scene>
         <!--Home-->
         <scene sceneID="X7Y-9i-ra6">
