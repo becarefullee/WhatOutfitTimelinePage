@@ -12,26 +12,27 @@ class PostContent: UITableViewCell {
 
   var post: Post?
   var screenWidth: CGFloat = UIScreen.main.bounds.width
+  var index: Int!
 
   @IBOutlet weak var contentImage: UIImageView!
   @IBOutlet weak var likeBtn: UIButton!
   @IBOutlet weak var numberOfLikes: UILabel!
   
-  
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-      contentImage.bounds.size.width = screenWidth
-      contentImage.bounds.size.height = screenWidth
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    contentImage.bounds.size.width = screenWidth
+    contentImage.bounds.size.height = screenWidth
+    contentImage.isUserInteractionEnabled = true
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
     }
   
-  func configure(post: Post) {
+  func configure(post: Post, index: Int) {
     contentImage.image = post.contentImage
     numberOfLikes.text = "\(converLikesToString(numberOfLikes: post.numberOfLikes)) likes"
+    self.index = index
   }
   
 
@@ -54,11 +55,9 @@ class PostContent: UITableViewCell {
       return number
 
     }
-
-    
-    
   }
-  
-  
-
 }
+
+
+
+

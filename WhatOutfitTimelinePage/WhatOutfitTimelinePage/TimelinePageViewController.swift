@@ -17,8 +17,9 @@ fileprivate let unlikeImage = UIImage(named:"praise")
 class TimelinePageViewController: UITableViewController {
 
 
-  var screenWidth: CGFloat = UIScreen.main.bounds.width
+  fileprivate var screenWidth: CGFloat = UIScreen.main.bounds.width
   fileprivate var dataSource = [Post]()
+
   
   override func viewDidLoad() {
       super.viewDidLoad()
@@ -34,7 +35,7 @@ class TimelinePageViewController: UITableViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    var statusView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 20))
+    let statusView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 20))
     statusView.backgroundColor = UIColor.white
 //      self.statusView = statusView
     UIApplication.shared.keyWindow?.addSubview(statusView)
@@ -67,10 +68,10 @@ class TimelinePageViewController: UITableViewController {
     tableView.reloadData()
   }
   
+
 }
 
-
-
+//:MARK Initialization
 extension TimelinePageViewController {
   func setUpForNavigationBar() {
     if let navigationController = navigationController {
@@ -109,13 +110,56 @@ extension TimelinePageViewController {
   }
 }
 
-
-
+//:MARK TapRecognizerHandler
 
 extension TimelinePageViewController {
   
+  func likeAnimation(center: CGPoint) {
+    let newView = UIImageView(image:UIImage(named: "praised_1"))
+    newView.center = center
+    newView.alpha = 0
+    view.addSubview(newView)
+    UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.3, options: [], animations: {
+      newView.alpha = 1
+      newView.transform = CGAffineTransform(scaleX: 2.3, y: 2.3)
+      
+    }) { (finished) in
+      UIView.animate(withDuration: 0.3, animations: {
+        newView.alpha = 0
+        newView.transform = CGAffineTransform.identity
+        newView.transform = CGAffineTransform(scaleX: 1/2.3, y: 1/2.3)
+        }, completion: { (finished) in
+          newView.removeFromSuperview()
+      })
+    }
+  }
   
   
+  func handleSingleTap(_ sender: UITapGestureRecognizer) {
+    print("Single Tapped")
+  }
+  func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+    
+    let cell = sender.view?.superview?.superview as! PostContent
+    let id: Int = cell.index
+    dataSource[id].likedByCurrentUser = !dataSource[id].likedByCurrentUser
+    if dataSource[id].likedByCurrentUser {
+      likeAnimation(center: cell.center)
+      cell.likeBtn.setImage(likeImage, for: .normal)
+      dataSource[id].numberOfLikes += 1
+    }else {
+      cell.likeBtn.setImage(unlikeImage, for: .normal)
+      dataSource[id].numberOfLikes -= 1
+    }
+    tableView.reloadData()
+    print("Double Tapped")
+  }
+}
+
+
+
+//MARK: TableView Datasource and delegate
+extension TimelinePageViewController {
   override func numberOfSections(in tableView: UITableView) -> Int {
     return dataSource.count
   }
@@ -126,7 +170,14 @@ extension TimelinePageViewController {
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! PostContent
-    cell.configure(post: dataSource[indexPath.section])
+    let singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
+    let doubleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+    singleTapRecognizer.numberOfTapsRequired = 1
+    doubleTapRecognizer.numberOfTapsRequired = 2
+    singleTapRecognizer.require(toFail: doubleTapRecognizer)
+    cell.contentImage.addGestureRecognizer(singleTapRecognizer)
+    cell.contentImage.addGestureRecognizer(doubleTapRecognizer)
+    cell.configure(post: dataSource[indexPath.section], index: indexPath.section)
     cell.selectionStyle = .none
     cell.likeBtn.setTitle("\(indexPath.section)", for: .normal)
     if dataSource[indexPath.section].likedByCurrentUser {
